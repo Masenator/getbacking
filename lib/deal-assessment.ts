@@ -32,6 +32,8 @@ type FieldBase = {
   name: string;
   label: string;
   helpText?: string;
+  /** When true, this field is skipped by the questions-step required-field check. */
+  optional?: boolean;
 };
 
 export type CurrencyField = FieldBase & {
@@ -48,7 +50,42 @@ export type DateField = FieldBase & {
   kind: "date";
 };
 
-export type AssessmentField = CurrencyField | SelectField | DateField;
+export type TextField = FieldBase & {
+  kind: "text";
+  placeholder?: string;
+};
+
+export type TextareaField = FieldBase & {
+  kind: "textarea";
+  placeholder?: string;
+};
+
+export type AssessmentField = CurrencyField | SelectField | DateField | TextField | TextareaField;
+
+/**
+ * Property postcode + a brief free-text description, collected on every
+ * assessment type. This doesn't feed the indicative LTV/GDV-ratio maths
+ * (those stay exactly as before) — it's captured so the founder has real
+ * location and property detail on every lead to work with directly
+ * (including feeding it to Claude for a closer GDV read on individual
+ * deals), not just the raw numbers.
+ */
+const postcodeField: TextField = {
+  kind: "text",
+  name: "postcode",
+  label: "Property postcode",
+  placeholder: "e.g. SW1A 1AA",
+  helpText: "Helps us place the property and pull comparable evidence.",
+};
+
+const propertyDescriptionField: TextareaField = {
+  kind: "textarea",
+  name: "propertyDescription",
+  label: "Brief description of the property",
+  placeholder: "e.g. 3-bed semi, needs a full refurb — or a 0.4-acre site with outline planning for 4 units",
+  helpText: "Type, size, condition, anything relevant — a couple of sentences is plenty.",
+  optional: true,
+};
 
 export type AssessmentTypeId =
   | "bridging-finance"
@@ -376,6 +413,8 @@ export const assessmentConfigs: Record<AssessmentTypeId, AssessmentTypeConfig> =
           { value: "flexible", label: "6+ months / not urgent yet" },
         ],
       },
+      postcodeField,
+      propertyDescriptionField,
     ],
     evaluate: evaluateBridging,
   },
@@ -403,6 +442,8 @@ export const assessmentConfigs: Record<AssessmentTypeId, AssessmentTypeConfig> =
           { value: "full", label: "Full planning permission" },
         ],
       },
+      postcodeField,
+      propertyDescriptionField,
     ],
     evaluate: evaluateDevelopment,
   },
@@ -429,6 +470,8 @@ export const assessmentConfigs: Record<AssessmentTypeId, AssessmentTypeConfig> =
           { value: "heavy", label: "Heavy refurbishment (structural, extension, change of use)" },
         ],
       },
+      postcodeField,
+      propertyDescriptionField,
     ],
     evaluate: evaluateRefurbishment,
   },
@@ -446,6 +489,8 @@ export const assessmentConfigs: Record<AssessmentTypeId, AssessmentTypeConfig> =
       { kind: "currency", name: "purchasePrice", label: "Purchase / hammer price", placeholder: "e.g. 180,000" },
       { kind: "date", name: "completionDate", label: "Auction completion date" },
       { kind: "currency", name: "depositPaid", label: "Deposit already paid", placeholder: "e.g. 18,000" },
+      postcodeField,
+      propertyDescriptionField,
     ],
     evaluate: evaluateAuction,
   },
@@ -473,6 +518,8 @@ export const assessmentConfigs: Record<AssessmentTypeId, AssessmentTypeConfig> =
           { value: "not_sure", label: "Not sure" },
         ],
       },
+      postcodeField,
+      propertyDescriptionField,
     ],
     evaluate: evaluateSecondCharge,
   },

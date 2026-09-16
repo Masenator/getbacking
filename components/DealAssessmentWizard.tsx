@@ -73,6 +73,7 @@ export function DealAssessmentWizard({ type }: { type: AssessmentTypeId }) {
     event.preventDefault();
     const missing = new Set<string>();
     for (const field of config.fields) {
+      if (field.optional) continue;
       if (!answer(values, field.name).trim()) missing.add(field.name);
     }
     setQuestionErrors(missing);
@@ -388,6 +389,47 @@ function FieldInput({
           ))}
         </select>
         {hasError && <p className="mt-1 text-xs text-accent-dark">Please select an option.</p>}
+      </div>
+    );
+  }
+
+  if (field.kind === "text") {
+    return (
+      <div>
+        <label htmlFor={field.name} className="block text-sm font-medium text-ink">
+          {field.label}
+        </label>
+        {field.helpText && <p className="mt-1 text-xs text-muted">{field.helpText}</p>}
+        <input
+          id={field.name}
+          type="text"
+          placeholder={field.placeholder}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className={`mt-1.5 w-full rounded-sm border ${errorClass} bg-paper px-3 py-2.5 text-sm text-ink focus-visible:outline-none`}
+        />
+        {hasError && <p className="mt-1 text-xs text-accent-dark">Please fill this in.</p>}
+      </div>
+    );
+  }
+
+  if (field.kind === "textarea") {
+    return (
+      <div>
+        <label htmlFor={field.name} className="block text-sm font-medium text-ink">
+          {field.label}
+          {field.optional && <span className="ml-1 font-normal text-muted">(optional)</span>}
+        </label>
+        {field.helpText && <p className="mt-1 text-xs text-muted">{field.helpText}</p>}
+        <textarea
+          id={field.name}
+          rows={3}
+          placeholder={field.placeholder}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className={`mt-1.5 w-full rounded-sm border ${errorClass} bg-paper px-3 py-2.5 text-sm text-ink focus-visible:outline-none`}
+        />
+        {hasError && <p className="mt-1 text-xs text-accent-dark">Please fill this in.</p>}
       </div>
     );
   }
