@@ -168,7 +168,9 @@ export default function AuctionFinancePage() {
 
       <CTABanner
         title="Bidding at auction soon?"
-        intro="Get an Agreement in Principle in place before the sale, so you bid with confidence, not a guess."
+        intro="Get a free, indicative read in about two minutes, then get an Agreement in Principle in place before the sale, so you bid with confidence, not a guess."
+        primaryLabel="Get Your Free Auction Assessment"
+        primaryHref="/deal-assessment/auction-finance"
       />
 
       <script

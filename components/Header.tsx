@@ -73,8 +73,8 @@ export function Header() {
           >
             {siteConfig.phoneDisplay}
           </a>
-          <Button href="/contact" variant="primary">
-            Get Backing
+          <Button href="/deal-assessment" variant="primary">
+            Free Deal Assessment
           </Button>
         </div>
 
@@ -124,8 +124,8 @@ export function Header() {
                 >
                   Call {siteConfig.phoneDisplay}
                 </a>
-                <Button href="/contact" variant="primary" className="w-full">
-                  Get Backing
+                <Button href="/deal-assessment" variant="primary" className="w-full">
+                  Free Deal Assessment
                 </Button>
               </div>
             </nav>

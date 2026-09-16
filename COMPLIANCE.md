@@ -42,7 +42,11 @@ reviewing them:
 1. **`app/legal/privacy-policy/page.tsx`** — placeholder UK GDPR / Data
    Protection Act 2018 privacy notice. Needs review against the business's
    actual data flows once real systems (CRM, analytics, form backend) are
-   chosen.
+   chosen. This now also discloses the Free Deal Assessment tool
+   (`/deal-assessment/*`) and names Formspree as the processor used for both
+   the contact form and the assessment tool — confirm Formspree (or whatever
+   processor is finally used) has been signed up under the business's own
+   account and that its terms/DPA are acceptable before launch.
 2. **`app/legal/terms/page.tsx`** — placeholder Terms of Business, including
    the description of Get Backing's role as a broker, fee disclosure
    language, and liability clauses.
@@ -81,6 +85,32 @@ This keeps the brand's confidence-first tone while still giving readers a
 plain-English, accurate steer. A solicitor may want to adjust the wording,
 but the underlying intent (accurate, low-key, not a wall of legalese)
 should be preserved.
+
+## Free Deal Assessment tool (`/deal-assessment/*`)
+
+Added after the initial build. Flags specific to this feature, in addition
+to the general points above:
+
+- **Not a credit decision, not an offer.** The indicative result is
+  calculated client-side from the visitor's own inputs using simple,
+  published rules of thumb (see `lib/deal-assessment.ts`) — it is not a
+  quote, a rate, a guaranteed loan amount, or any form of automated credit
+  decision. Every result screen and the confirmation step reiterate that a
+  human will call to go through the detail. Do not remove that framing.
+- **Numeric bands need a real sanity check.** The LTV/cost-to-GDV ceilings
+  used in `lib/deal-assessment.ts` (documented in the handback report from
+  the build session) are directional, kept consistent with what's already
+  published on the product pages, but are not drawn from live lender panel
+  criteria. The founder should review and adjust them before this goes
+  live — they directly shape what a prospective borrower is told about
+  their own deal.
+- **Formspree is the data processor** for submissions from this tool (see
+  Privacy Policy). No submitted lead data (name, phone, email, deal
+  details) is stored in this codebase, logs, or the repo at any point — it
+  only ever leaves the visitor's browser via a direct POST to the
+  configured `NEXT_PUBLIC_LEAD_FORM_ENDPOINT`.
+- **GDPR consent** is a required checkbox on the details step, referencing
+  the Privacy Policy, consistent with the enquiry data described there.
 
 ## Things this build deliberately did NOT do
 

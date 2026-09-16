@@ -176,7 +176,9 @@ export default function DevelopmentFinancePage() {
 
       <CTABanner
         title="Got a scheme that needs backing?"
-        intro="Send us the numbers — site, build cost, GDV — and we'll tell you straight what's fundable and where."
+        intro="Get a free, indicative read on the numbers — site, build cost, GDV — in about two minutes, then we'll tell you straight what's fundable and where."
+        primaryLabel="Get Your Free Development Assessment"
+        primaryHref="/deal-assessment/development-finance"
       />
 
       <script

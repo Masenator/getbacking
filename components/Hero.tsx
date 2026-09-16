@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { Container } from "./Container";
 import { Button } from "./Button";
+import { siteConfig } from "@/lib/site-config";
 
 export function Hero() {
   return (
@@ -22,13 +24,24 @@ export function Hero() {
           by a broker who fights for your deal from start to finish.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
-          <Button href="/contact" variant="primary">
-            Get Your Backing
+          <Button href="/deal-assessment" variant="primary">
+            Get Your Free Deal Assessment
           </Button>
           <Button href="/how-it-works" variant="ghost" className="border-paper/40 text-paper hover:bg-paper hover:text-ink">
             See How It Works
           </Button>
         </div>
+        <p className="mt-5 text-sm text-paper/60">
+          Rather just talk?{" "}
+          <Link href="/contact" className="underline hover:text-paper">
+            Contact us
+          </Link>{" "}
+          or call{" "}
+          <a href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`} className="underline hover:text-paper">
+            {siteConfig.phoneDisplay}
+          </a>
+          .
+        </p>
       </Container>
     </section>
   );

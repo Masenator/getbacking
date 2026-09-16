@@ -167,7 +167,9 @@ export default function RefurbishmentFinancePage() {
 
       <CTABanner
         title="Got a refurb project to fund?"
-        intro="Tell us the scope and the numbers, and we'll tell you whether it's a light refurb bridge or something bigger."
+        intro="Get a free, indicative read on the scope and the numbers in about two minutes, then we'll tell you whether it's a light refurb bridge or something bigger."
+        primaryLabel="Get Your Free Refurbishment Assessment"
+        primaryHref="/deal-assessment/refurbishment-finance"
       />
 
       <script

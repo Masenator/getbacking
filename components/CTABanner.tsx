@@ -1,11 +1,12 @@
+import Link from "next/link";
 import { Container } from "./Container";
 import { Button } from "./Button";
 
 export function CTABanner({
   title = "Got a deal that needs backing?",
-  intro = "Tell us the details and we'll come back to you — usually the same working day — with a straight answer on how we can fund it.",
-  primaryLabel = "Start Your Enquiry",
-  primaryHref = "/contact",
+  intro = "Get an honest, indicative read on your deal in about two minutes — free, no obligation, then we'll call you to go through the detail.",
+  primaryLabel = "Get Your Free Deal Assessment",
+  primaryHref = "/deal-assessment",
 }: {
   title?: string;
   intro?: string;
@@ -20,6 +21,13 @@ export function CTABanner({
             {title}
           </h2>
           <p className="mt-2 max-w-xl text-ink/80">{intro}</p>
+          <p className="mt-3 text-sm text-ink/70">
+            Prefer to just talk?{" "}
+            <Link href="/contact" className="underline hover:no-underline">
+              Contact us
+            </Link>{" "}
+            instead.
+          </p>
         </div>
         <Button href={primaryHref} variant="secondary" className="shrink-0">
           {primaryLabel}

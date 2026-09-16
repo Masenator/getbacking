@@ -8,6 +8,12 @@ export const dynamic = "force-static";
 
 const staticRoutes: { path: string; priority: number; changeFrequency: "weekly" | "monthly" | "yearly" }[] = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
+  { path: "/deal-assessment", priority: 0.95, changeFrequency: "monthly" },
+  { path: "/deal-assessment/bridging-finance", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/deal-assessment/development-finance", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/deal-assessment/refurbishment-finance", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/deal-assessment/auction-finance", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/deal-assessment/second-charge-finance", priority: 0.85, changeFrequency: "monthly" },
   { path: "/bridging-finance", priority: 0.9, changeFrequency: "monthly" },
   { path: "/development-finance", priority: 0.9, changeFrequency: "monthly" },
   { path: "/refurbishment-finance", priority: 0.9, changeFrequency: "monthly" },

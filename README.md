@@ -42,6 +42,11 @@ app/                     Route segments (App Router). One folder per URL.
   development-finance/     } Service/landing pages, one per finance product
   refurbishment-finance/   }
   auction-finance/         }
+  second-charge-finance/   }
+  deal-assessment/          Free Deal Assessment funnel: index (Step 1 —
+                             pick a deal type) + one static route per type
+                             (Steps 2–4 — questions, indicative result,
+                             contact capture, confirmation)
   how-it-works/            Process page
   about/                   About / positioning
   faqs/                    General FAQs (+ FAQPage JSON-LD)
@@ -53,12 +58,15 @@ app/                     Route segments (App Router). One folder per URL.
   not-found.tsx             404 page
 
 components/               Reusable UI (Header, Footer, cards, FAQ accordion,
-                           breadcrumbs, CTA banner, contact form, etc.)
+                           breadcrumbs, CTA banner, contact form,
+                           DealAssessmentWizard, DealAssessmentPageShell, etc.)
 
 lib/
   site-config.ts           Single source of truth: brand name, contact
                             details, nav links, legal disclaimer text
   blog-posts.ts             Blog post manifest (metadata for all articles)
+  deal-assessment.ts        Free Deal Assessment config: question sets and
+                             indicative-result logic for each finance type
   schema.ts                 JSON-LD builders (Organization, Breadcrumb, FAQ,
                              Service, Article)
   seo.ts                     Per-page Metadata builders (canonical + full
@@ -91,13 +99,25 @@ npm run typecheck   # tsc --noEmit
 (gitignored) as plain HTML/CSS/JS. You can sanity-check it locally with any
 static file server, e.g. `npx serve out`.
 
+## Environment variables
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_LEAD_FORM_ENDPOINT` | Yes, before launch | The Formspree (or equivalent) form endpoint URL that the Free Deal Assessment tool (`components/DealAssessmentWizard.tsx`) POSTs completed leads to. Without it, submissions fail gracefully with an on-screen phone/email fallback — see "Before this goes live" below. |
+
+Set it locally in `.env.local` (gitignored, never commit it) and in the
+Vercel project's Environment Variables settings. It's prefixed
+`NEXT_PUBLIC_` because it's read client-side (the site has no server), so
+treat it as a public, non-secret value — it should only ever be a plain
+POST endpoint URL, not an API key.
+
 ## Deploying to Vercel
 
 This repo is Vercel-ready out of the box:
 
 1. Import the GitHub repo into a new Vercel project.
-2. Framework preset: Next.js (auto-detected). No environment variables are
-   required for the current build.
+2. Framework preset: Next.js (auto-detected). Set `NEXT_PUBLIC_LEAD_FORM_ENDPOINT`
+   in the project's Environment Variables (see above) before going live.
 3. Vercel will run `next build` and serve the static export automatically —
    no additional configuration needed.
 4. Point the custom domain (`getbacking.co.uk` / `www.getbacking.co.uk`) at
@@ -171,3 +191,25 @@ See the punch list in the handback report from the build session, and:
 - Wire up the contact form to a real backend if `mailto:` isn't sufficient
   long-term (see the comment in `components/ContactForm.tsx` — Formspree or
   similar is the lean next step, not custom infrastructure).
+- **Set up Formspree for the Free Deal Assessment tool** (`/deal-assessment/*`)
+  so leads actually reach mason@getbacking.co.uk:
+  1. Sign up at [formspree.io](https://formspree.io) (the free tier is fine
+     to start).
+  2. Create a new form in the Formspree dashboard.
+  3. Set the form's recipient email to `mason@getbacking.co.uk` (Formspree
+     will send a confirmation email to that address the first time — it
+     must be clicked to activate the form).
+  4. Copy the form's endpoint URL (`https://formspree.io/f/xxxxxxxx`).
+  5. Set `NEXT_PUBLIC_LEAD_FORM_ENDPOINT` to that URL locally in
+     `.env.local` (create the file if it doesn't exist — it's gitignored)
+     and in the Vercel project's Environment Variables for
+     Production/Preview.
+  6. Redeploy, then submit a real test assessment end-to-end and confirm
+     the email arrives at mason@getbacking.co.uk.
+  7. In Formspree's dashboard, consider enabling reCAPTCHA/spam filtering
+     on the form (free tier includes basic spam filtering) since this is a
+     public, indexable page that will attract bot traffic over time.
+  - Until this is configured, submissions fail gracefully in the UI with a
+    direct phone/email fallback (no lead is silently lost) — but no lead
+    reaches the inbox either, so this must be done before the assessment
+    tool is promoted anywhere.

@@ -169,7 +169,9 @@ export default function SecondChargeFinancePage() {
 
       <CTABanner
         title="Got equity locked up behind an existing charge?"
-        intro="Tell us about your first charge and what you need to raise, and we'll tell you the same working day whether — and how — we can get it funded."
+        intro="Get a free, indicative read on your first charge and what you need to raise in about two minutes, then we'll tell you the same working day whether, and how, we can get it funded."
+        primaryLabel="Get Your Free Second Charge Assessment"
+        primaryHref="/deal-assessment/second-charge-finance"
       />
 
       <script

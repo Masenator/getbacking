@@ -180,7 +180,9 @@ export default function BridgingFinancePage() {
 
       <CTABanner
         title="Got a bridging deal that needs to move fast?"
-        intro="Tell us the details and we'll tell you the same working day whether — and how — we can get it funded."
+        intro="Get a free, indicative read on your deal in about two minutes — then we'll tell you the same working day whether, and how, we can get it funded."
+        primaryLabel="Get Your Free Bridging Assessment"
+        primaryHref="/deal-assessment/bridging-finance"
       />
 
       <script

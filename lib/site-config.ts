@@ -68,6 +68,7 @@ export const productLinks: NavLink[] = [
 ];
 
 export const mainNavLinks: NavLink[] = [
+  { label: "Free Deal Assessment", href: "/deal-assessment" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "About", href: "/about" },
   { label: "Insights", href: "/insights" },

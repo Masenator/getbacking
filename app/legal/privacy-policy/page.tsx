@@ -42,6 +42,18 @@ export default function PrivacyPolicyPage() {
           contact form or by email or phone.
         </li>
         <li>
+          <strong>Free Deal Assessment data</strong>: if you use our Free
+          Deal Assessment tool, we collect your full name, mobile number,
+          email address, and the deal details you enter (for example
+          property value, loan amount, works cost, or planning status,
+          depending on the finance type), plus anything you add in the
+          optional free-text field. The indicative result shown to you is
+          calculated in your browser from your own answers using simple,
+          published rules of thumb — it is not based on any additional data
+          about you, is not a credit decision, and is not shared with any
+          credit reference agency.
+        </li>
+        <li>
           <strong>Usage data</strong>: standard technical information such as
           IP address, browser type and pages visited, typically collected via
           analytics tools once installed (see &quot;Cookies&quot; below and
@@ -75,6 +87,19 @@ export default function PrivacyPolicyPage() {
         support our operations (for example, email and hosting providers)
         under appropriate data protection terms. We do not sell your personal
         data.
+      </p>
+      <p>
+        Submissions from our contact form and Free Deal Assessment tool are
+        processed by <strong>Formspree</strong>, a third-party form-to-email
+        service, purely to deliver your enquiry to our inbox by email — we do
+        not maintain a separate database of submissions ourselves. Formspree
+        may process and briefly store submission data on its own servers as
+        part of providing that service; see{" "}
+        <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+          Formspree&apos;s privacy policy
+        </a>{" "}
+        for details. If we change form processor, this section will be
+        updated to name the new provider.
       </p>
 
       <h2>How long we keep your data</h2>
