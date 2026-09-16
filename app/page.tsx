@@ -40,6 +40,11 @@ const productCardCopy: Record<string, { description: string; points: string[] }>
       "Certainty of funds before you bid, and a lender that can actually complete inside a 28-day auction deadline.",
     points: ["Agreement in principle before the sale", "Built for 20–28 day completions", "No last-minute surprises on legal timelines"],
   },
+  "/second-charge-finance": {
+    description:
+      "Raise additional capital against a property you already have finance on — without disturbing your existing first charge.",
+    points: ["Keep your existing first charge in place", "First charge lender consent handled for you", "Residential, mixed-use and commercial security"],
+  },
 };
 
 const homeProcessSteps = [

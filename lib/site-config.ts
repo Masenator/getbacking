@@ -60,6 +60,11 @@ export const productLinks: NavLink[] = [
     href: "/auction-finance",
     description: "Certainty of funds to hit tight auction completion deadlines.",
   },
+  {
+    label: "Second Charge Finance",
+    href: "/second-charge-finance",
+    description: "Raise capital against a property you already have finance on.",
+  },
 ];
 
 export const mainNavLinks: NavLink[] = [

@@ -12,6 +12,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: "weekly" 
   { path: "/development-finance", priority: 0.9, changeFrequency: "monthly" },
   { path: "/refurbishment-finance", priority: 0.9, changeFrequency: "monthly" },
   { path: "/auction-finance", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/second-charge-finance", priority: 0.9, changeFrequency: "monthly" },
   { path: "/how-it-works", priority: 0.7, changeFrequency: "monthly" },
   { path: "/about", priority: 0.6, changeFrequency: "monthly" },
   { path: "/faqs", priority: 0.7, changeFrequency: "monthly" },

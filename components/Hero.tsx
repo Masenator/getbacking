@@ -19,7 +19,7 @@ export function Hero() {
           Get Backing is the down-to-earth, no-nonsense finance broker for
           property developers who are tired of dealing with bankers. Whole-of-market
           bridging, development, refurbishment and auction finance — arranged
-          by a broker who fights for your deal, not the lender&apos;s comfort zone.
+          by a broker who fights for your deal from start to finish.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <Button href="/contact" variant="primary">
