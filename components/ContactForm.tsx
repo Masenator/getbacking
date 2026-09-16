@@ -23,6 +23,15 @@ export function ContactForm() {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
 
+    // Honeypot: hidden from real visitors, so a non-empty value means a
+    // bot filled every field. Show the normal "submitted" state but don't
+    // actually open the mailto link. Keeps this ready for when the form
+    // moves to a real backend (see file comment above).
+    if (String(form.get("company-website") ?? "").trim().length > 0) {
+      setSubmitted(true);
+      return;
+    }
+
     const name = String(form.get("name") ?? "");
     const company = String(form.get("company") ?? "");
     const email = String(form.get("email") ?? "");
@@ -52,6 +61,10 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", width: 1, height: 1, overflow: "hidden" }}>
+        <label htmlFor="contact-company-website">Leave this field blank</label>
+        <input type="text" id="contact-company-website" name="company-website" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Full name" name="name" required autoComplete="name" />
         <Field label="Company (optional)" name="company" autoComplete="organization" />

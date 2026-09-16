@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import Link from "next/link";
 import {
   answer,
@@ -28,6 +28,14 @@ type DetailErrors = Partial<Record<keyof DetailsState | "consent", string>>;
 const emptyDetails: DetailsState = { fullName: "", mobile: "", email: "", notes: "" };
 
 /**
+ * Minimum time (ms) between the wizard mounting and the details step being
+ * submitted for it to be treated as a genuine human. Bots that fill and
+ * submit the whole flow programmatically do it near-instantly; a real
+ * person reading two steps and typing three fields realistically can't.
+ */
+const MIN_HUMAN_SUBMIT_MS = 4000;
+
+/**
  * Client-side wizard driving steps 2–4 of the Free Deal Assessment funnel
  * for a single finance type: type-specific questions -> indicative result
  * -> contact capture -> confirmation.
@@ -49,6 +57,13 @@ export function DealAssessmentWizard({ type }: { type: AssessmentTypeId }) {
   const [consent, setConsent] = useState(false);
   const [detailErrors, setDetailErrors] = useState<DetailErrors>({});
   const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "error">("idle");
+
+  // Spam defences: a hidden field real visitors never see or fill, and a
+  // minimum elapsed-time check. Neither is shown to the visitor — a
+  // suspected bot still sees the normal confirmation screen, it's just
+  // never actually sent anywhere.
+  const [honeypot, setHoneypot] = useState("");
+  const mountedAt = useRef(Date.now());
 
   function setValue(name: string, value: string) {
     setValues((prev) => ({ ...prev, [name]: value }));
@@ -76,6 +91,14 @@ export function DealAssessmentWizard({ type }: { type: AssessmentTypeId }) {
     if (!consent) errors.consent = "Please confirm you're happy for us to contact you.";
     setDetailErrors(errors);
     if (Object.keys(errors).length > 0) return;
+
+    const looksLikeBot = honeypot.trim().length > 0 || Date.now() - mountedAt.current < MIN_HUMAN_SUBMIT_MS;
+    if (looksLikeBot) {
+      // Don't tip the bot off — show the normal confirmation, just never
+      // call the network or use up Formspree quota / reach the inbox.
+      setStep("done");
+      return;
+    }
 
     setSubmitStatus("submitting");
 
@@ -174,6 +197,20 @@ export function DealAssessmentWizard({ type }: { type: AssessmentTypeId }) {
           <p className="text-sm text-muted">
             Last step — tell us how to reach you and we&apos;ll call you to go through your {config.label.toLowerCase()} enquiry in detail.
           </p>
+
+          {/* Honeypot: hidden from real visitors, invisible to screen readers, never in tab order. Bots that fill every field in a form catch themselves here. */}
+          <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", width: 1, height: 1, overflow: "hidden" }}>
+            <label htmlFor="company-website">Leave this field blank</label>
+            <input
+              type="text"
+              id="company-website"
+              name="company-website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(event) => setHoneypot(event.target.value)}
+            />
+          </div>
 
           <TextField
             label="Full name"
